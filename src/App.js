@@ -8,6 +8,7 @@ import PatientCaring from './components/PatientCaring';
 import Blogs from './components/Blogs';
 import Stats from './components/Stats';
 import FAQs from './components/FAQs';
+import DownloadApp from './components/DownloadApp';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Blogs />
       <Stats />
       <FAQs />
+      <DownloadApp />
     </div>
   );
 }
