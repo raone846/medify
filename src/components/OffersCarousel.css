@@ -1,0 +1,31 @@
+/* Ensure pagination dots appear below the carousel */
+.swiper-pagination {
+    position: relative; /* Use relative positioning for proper layout */
+    bottom: -40px; /* Move the dots lower */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    z-index: 10; /* Ensure dots are above other content */
+}
+
+/* Style individual pagination dots */
+.swiper-pagination-bullet {
+    background-color: #000; /* Default color for the dots */
+    width: 12px; /* Size of the dots */
+    height: 12px; /* Size of the dots */
+    opacity: 0.6; /* Slightly transparent */
+    transition: background-color 0.3s, opacity 0.3s; /* Smooth transition */
+    margin: 0 5px; /* Space between the dots */
+}
+
+/* Active dot style */
+.swiper-pagination-bullet-active {
+    background-color: #ff6347; /* Active dot color */
+    opacity: 1; /* Full opacity for active dot */
+}
+
+/* Dots hover effect */
+.swiper-pagination-bullet:hover {
+    background-color: #ff6347; /* Hover color for dots */
+    opacity: 1; /* Full opacity on hover */
+}
