@@ -11,7 +11,7 @@ function Hero() {
       <Box
         sx={{
           background: 'linear-gradient(81deg, #E7F0FF 9.01%, rgba(232, 241, 255, 0.47) 89.11%)',
-          height: '100vh',
+          height: '736px',
           display: 'flex',
           textAlign: "left",
           px: 25, // Padding for horizontal spacing

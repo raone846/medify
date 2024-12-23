@@ -19,12 +19,20 @@ const images = [
     { label: 'Slide 7', imgPath: image2 },
     { label: 'Slide 8', imgPath: image1 },
     { label: 'Slide 9', imgPath: image2 },
-    
 ];
 
 function OffersCarousel() {
     return (
-        <Box sx={{ mt: 25, mb: 10, mr: 5, ml: 5 }}>
+        <Box 
+            sx={{
+                m: 0, 
+                p: 0, 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                height: '10vh', // Ensure Box takes full viewport height for vertical centering
+            }}
+        >
             <Swiper
                 modules={[Pagination, Autoplay]} // Only include Pagination and Autoplay modules
                 spaceBetween={30} // Adjust space between slides
@@ -32,19 +40,23 @@ function OffersCarousel() {
                 pagination={{ clickable: true }} // Enable clickable dots for pagination
                 autoplay={{ delay: 3000 }} // Autoplay with 3-second delay
                 loop={true} // Enable loop for infinite scrolling
+                style={{
+                    width: '80%', // Adjust the width of the Swiper to control its size
+                    marginTop: '-300px'
+                }}
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>
-                            <img
-                                src={image.imgPath}
-                                alt={image.label}
-                                style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                    display: 'block',
-                                    margin: '0 auto',
-                                }}
-                            />
+                        <img
+                            src={image.imgPath}
+                            alt={image.label}
+                            style={{
+                                width: '100%',
+                                height: 'auto',
+                                display: 'block',
+                                margin: '0 auto',
+                            }}
+                        />
                     </SwiperSlide>
                 ))}
             </Swiper>
