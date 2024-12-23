@@ -276,7 +276,6 @@ function Footer() {
           fontWeight: 400,
           borderTop: '1px solid #FFFFFF1A',
           width: '80%',
-          textAlign: 'center',
           paddingTop: '10px',
           marginTop: '20px',
           textAlign:'left'
