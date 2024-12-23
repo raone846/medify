@@ -8,6 +8,8 @@ import PhoneCard from './PhoneCard';
 function DownloadApp() {
   return (
     <Box sx={{ 
+        position: 'relative',
+        zIndex: 1,
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center', 
