@@ -8,11 +8,11 @@ import logo from '../assets/logo.png'; // Import the logo image
 
 const pages = ['Find Doctors', 'Hospitals', 'Medicines', 'Surgeries', 'Software for Provider', 'Facilities'];
 
-function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+function ResponsiveAppBar({ onPageSelect }) { // Accept a callback function as a prop
+  const handlePageClick = (page) => {
+    if (onPageSelect) {
+      onPageSelect(page); // Call the callback with the selected page
+    }
   };
 
   return (
@@ -20,35 +20,35 @@ function ResponsiveAppBar() {
       position="static"
       sx={{
         background: 'linear-gradient(81deg, #E7F0FF 9.01%, rgba(232, 241, 255, 0.47) 89.11%)',
-        paddingLeft:"50px", 
-        paddingRight:"50px", 
-        boxShadow: "none"
+        paddingLeft: "50px",
+        paddingRight: "50px",
+        boxShadow: "none",
       }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* Logo aligned to the left */}
           <Box
             component="img"
             src={logo}
             alt="Logo"
+            onClick={() => handlePageClick("home")}
             sx={{
               height: "27px",
               width: "92px",
               mr: 2,
               display: { xs: 'none', md: 'flex' },
+              cursor: 'pointer'
             }}
           />
 
-          {/* Pages aligned to the right with spacing */}
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end', mr: 2 }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handlePageClick(page)} // Handle button click
                 sx={{
                   my: 2,
-                  mx: 1, // Add horizontal margin for spacing
+                  mx: 1,
                   display: 'block',
                   color: 'black',
                   textTransform: 'none',
@@ -59,9 +59,9 @@ function ResponsiveAppBar() {
             ))}
           </Box>
 
-          {/* My Bookings button aligned to the far right */}
           <Box sx={{ flexGrow: 0 }}>
             <Button
+              onClick={() => handlePageClick("bookings")}
               sx={{
                 background: '#2AA8FF',
                 color: 'white',

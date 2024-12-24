@@ -15,6 +15,7 @@ function FAQs() {
         justifyContent: 'center',
         alignItems: 'center',
         padding: '20px',
+        background:"white"
       }}
     >
       {/* Introductory Text */}

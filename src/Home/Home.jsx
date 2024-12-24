@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import OffersCarousel from '../components/OffersCarousel';
 import Specialisation from '../components/Specialisation';
@@ -16,7 +15,6 @@ import Box from '@mui/material/Box';
 function Home() {
   return (
     <div>
-      <Navbar />
       <Box sx={{ position: 'relative', width: '100%' }}>
         {/* Hero Section */}
         <Box sx={{ width: '100%' }}>

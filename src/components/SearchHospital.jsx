@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { MenuItem, Select, Button, InputAdornment, Box } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 export default function SearchHospital() {
     const [states, setStates] = useState([]);
     const [cities, setCities] = useState([]);
     const [formData, setFormData] = useState({ state: "", city: "" });
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchStates = async () => {
@@ -50,7 +52,7 @@ export default function SearchHospital() {
         if (formData.state && formData.city) {
             console.log("Search submitted:", formData);
             // Example navigation
-            // navigate(`/search?state=${formData.state}&city=${formData.city}`);
+            navigate(`/search?state=${formData.state}&city=${formData.city}`);
         }
     };
 
