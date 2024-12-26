@@ -32,7 +32,13 @@ export default function PaginationTimeSlot({ onSelect }) {
   };
 
   const handleDayClick = (day) => {
-    setSelectedDay(day);
+    if(day === "Tomorrow"){
+      const now = new Date();
+      now.setDate(now.getDate() + 1); // Calculate tomorrow's date
+      setSelectedDay(now.toLocaleDateString("en-US", { weekday: 'short', day: 'numeric', month: 'short' }));
+    } else{
+      setSelectedDay(day);
+    } 
     if (selectedTime) onSelect(day, selectedTime);
   };
 
