@@ -55,6 +55,7 @@ function Hospitals() {
 
     // Add or update the booking in the object using a unique key (e.g., hospital name)
     existingBookings[hospital["Hospital Name"]] = {
+      name: hospital["Hospital Name"],
       address: hospital.Address,
       city: hospital.City,
       state: hospital.State,

@@ -8,7 +8,10 @@ import Hospital_Image from "../assets/Hospital_image.png";
 import Success from "../assets/success.png";
 
 function Bookings() {
-  const hospitals = [1,2,3,4,5,6];
+  const hospitals_data = JSON.parse(localStorage.getItem('selectedBookings'));
+  const hospitals = Object.values(hospitals_data);
+  console.log(hospitals)
+
   return (
       <Box sx={{background:'linear-gradient(81deg, #E7F0FF 9.01%, rgba(232, 241, 255, 0.47) 89.11%)'}}>
         <Box sx={{
@@ -74,15 +77,24 @@ function Bookings() {
                       </Box>
                       <Box sx={{ flex: 1, marginLeft: "20px" }}>
                         <h2 style={{ color: "#14BEF0", fontSize: "20px", fontWeight: "600" }}>
-                          
+                          {hospital.name}
                         </h2>
                         <p style={{ fontSize: "14px", color: "#414146", fontWeight: "700" }}>
-                          
+                          {hospital.address}, {hospital.city}, {hospital.state}, {hospital.zipCode}
                         </p>
                         <p style={{color:"#414146"}}>Smilessence Center for Advanced Dentistry + 1 more</p>
                        
                         <Box component="img" src={Success} alt="Rating" />
                       </Box>
+                      <Box sx={{display:"flex",justifyContent:"center", alignItems:"center", gap:2}}>
+                        <Box sx={{border:"1px solid #2AA7FF", color:"#2AA7FF", p:1}}>
+                          {hospital.selectedTime}
+                        </Box>
+                        <Box sx={{border:"1px solid #00A500", color:"#007100", p:1}}>
+                          {hospital.selectedDay}
+                        </Box>
+                      </Box>
+                      
                     </Box>
                   </Box>
                 ))}

@@ -4,8 +4,13 @@ import Stack from "@mui/material/Stack";
 
 export default function PaginationTimeSlot({ onSelect }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedDay, setSelectedDay] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
+  const date = new Date().toLocaleDateString("en-US", { 
+    weekday: 'short', 
+    day: 'numeric', 
+    month: 'short' 
+  }); 
+  const [selectedDay, setSelectedDay] = useState(date);
 
   const generatePaginationLabels = (count) => {
     const labels = ["Today", "Tomorrow"];
@@ -22,8 +27,8 @@ export default function PaginationTimeSlot({ onSelect }) {
 
   const timeSlots = {
     Morning: ["11:00 AM"],
-    Afternoon: ["12:00 PM", "1:30 PM", "2:00 PM"],
-    Evening: ["6:00 PM", "7:30 PM"],
+    Afternoon: ["12:00 PM", "12:30 PM","1:30 PM", "2:00 PM", "2:30 PM"],
+    Evening: ["6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM"],
   };
 
   const handleDayClick = (day) => {
