@@ -17,7 +17,7 @@ function Hospitals() {
   const [hospitals, setHospitals] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [booking, setBooking] = useState({}); // Track booking state for each hospital
+  const [booking, setBooking] = useState({});
 
   // Extract query parameters
   const queryParams = new URLSearchParams(location.search);
@@ -41,42 +41,33 @@ function Hospitals() {
     }
   }, [state, city]);
 
-  // Function to toggle booking state for each hospital
   const handleBookingClick = (index) => {
     setBooking((prev) => {
       const updatedBooking = { ...prev };
-      updatedBooking[index] = !updatedBooking[index]; // Toggle the booking state for the specific hospital
-      if (updatedBooking[index]) {
-        // If booking is confirmed, save to localStorage and set visibility to false
-        localStorage.setItem("selectedBooking", JSON.stringify({ ...updatedBooking }));
-      }
+      updatedBooking[index] = !updatedBooking[index];
       return updatedBooking;
     });
   };
 
-  const [selectedDay, setSelectedDay] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
+  const handleSelection = (day, time, hospital, index) => {
+    // Retrieve existing bookings from localStorage or initialize as an empty object
+    const existingBookings = JSON.parse(localStorage.getItem("selectedBookings")) || {};
 
-  const handleSelection = (day, time, hospital) => {
-    setSelectedDay(day);
-    setSelectedTime(time);
-
-    // Save the booking details to localStorage
-    const bookingDetails = {
-      hospitalName: hospital["Hospital Name"],
+    // Add or update the booking in the object using a unique key (e.g., hospital name)
+    existingBookings[hospital["Hospital Name"]] = {
       address: hospital.Address,
       city: hospital.City,
       state: hospital.State,
       zipCode: hospital["ZIP Code"],
-      selectedDay: selectedDay,
-      selectedTime: selectedTime,
+      selectedDay: day,
+      selectedTime: time,
     };
 
-    // Save the booking details in localStorage
-    localStorage.setItem("selectedBooking", JSON.stringify(bookingDetails));
+    // Save the updated bookings object back to localStorage
+    localStorage.setItem("selectedBookings", JSON.stringify(existingBookings));
 
-    // Once the booking is confirmed, set the booking visibility to false
-    handleBookingClick(hospital.index);  // Set booking visibility to false after confirmation
+    // Optionally, update local state to reflect the change
+    setBooking((prev) => ({ ...prev, [index]: false }));
   };
 
   return (
@@ -93,33 +84,12 @@ function Hospitals() {
           borderEndStartRadius: "20px",
         }}
       />
-
-      <Box
-        width="85%"
-        sx={{
-          background: "#fff",
-          borderRadius: "10px",
-          margin: "0 auto",
-        }}
-      >
+      <Box width="85%" sx={{ background: "#fff", borderRadius: "10px", margin: "0 auto" }}>
         <SearchHospital />
       </Box>
-
-      <Box
-        sx={{
-          width: "85%",
-          margin: "0 auto",
-          padding: "20px 0",
-        }}
-      >
+      <Box sx={{ width: "85%", margin: "0 auto", padding: "20px 0" }}>
         <Box>
-          <label
-            style={{
-              textAlign: "left",
-              fontSize: "24px",
-              fontWeight: "500",
-            }}
-          >
+          <label style={{ textAlign: "left", fontSize: "24px", fontWeight: "500" }}>
             {hospitals.length} medical centers available in {state}
           </label>
           <Box sx={{ display: "flex", justifyContent: "left" }}>
@@ -144,7 +114,8 @@ function Hospitals() {
                         border: "1px solid #ccc",
                         padding: "20px",
                         margin: "10px 0",
-                        borderRadius: "10px",
+                        borderTopLeftRadius:"20px",
+                        borderTopRightRadius:"20px",
                         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
                         background: "#fff",
                         display: "flex",
@@ -152,7 +123,6 @@ function Hospitals() {
                         justifyContent: "space-between",
                       }}
                     >
-                      {/* Image Section */}
                       <Box
                         sx={{
                           width: "124px",
@@ -162,75 +132,23 @@ function Hospitals() {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
-                          flexShrink: 0,
                         }}
                       >
-                        <Box
-                          component="img"
-                          src={Hospital_Image}
-                          alt="Hospital"
-                          sx={{
-                            width: "80px",
-                            height: "80px",
-                          }}
-                        />
+                        <Box component="img" src={Hospital_Image} alt="Hospital" sx={{ width: "80px", height: "80px" }} />
                       </Box>
-
-                      {/* Text Section */}
                       <Box sx={{ flex: 1, marginLeft: "20px" }}>
-                        <h2
-                          style={{
-                            color: "#14BEF0",
-                            fontSize: "20px",
-                            fontWeight: "600",
-                          }}
-                        >
+                        <h2 style={{ color: "#14BEF0", fontSize: "20px", fontWeight: "600" }}>
                           {hospital["Hospital Name"]}
                         </h2>
-                        <p
-                          style={{
-                            fontSize: "14px",
-                            color: "#414146",
-                            fontWeight: "700",
-                          }}
-                        >
-                          {hospital.Address}, {hospital.City}, {hospital.State},{" "}
-                          {hospital["ZIP Code"]}
+                        <p style={{ fontSize: "14px", color: "#414146", fontWeight: "700" }}>
+                          {hospital.Address}, {hospital.City}, {hospital.State}, {hospital["ZIP Code"]}
                         </p>
-                        <p style={{ color: "#414146" }}>
-                          Smilessence Center for Advanced Dentistry + 1 more
-                        </p>
-                        <p style={{ color: "#414146" }}>
-                          <strong style={{ color: "#02A401" }}>FREE</strong>{" "}
-                          <span
-                            style={{
-                              textDecoration: "line-through",
-                              color: "#787887",
-                            }}
-                          >
-                            ₹500
-                          </span>{" "}
-                          Consultation fee at clinic
-                        </p>
+                        <p style={{color:"#414146"}}>Smilessence Center for Advanced Dentistry + 1 more</p>
+                        <p style={{color:"#414146"}}><span style={{color:"#01A400"}}>FREE</span> <span style={{textDecoration:"line-through"}}>₹500</span> Consultation fee at clinic</p>
                         <Box component="img" src={Success} alt="Rating" />
                       </Box>
-
-                      {/* Button Section */}
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: 2,
-                        }}
-                      >
-                        <label
-                          style={{
-                            textAlign: "center",
-                            color: "#01A400",
-                            fontSize: "14px",
-                            fontWeight: "500",
-                          }}
-                        >
+                      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                        <label style={{ textAlign: "center", color: "#01A400", fontSize: "14px", fontWeight: "500" }}>
                           Available Today
                         </label>
                         <button
@@ -238,10 +156,7 @@ function Hospitals() {
                             padding: "10px 20px",
                             backgroundColor: booking[index] ? "#FF6347" : "#2AA7FF",
                             color: "#fff",
-                            border: "1px solid #14BEF0",
                             borderRadius: "5px",
-                            cursor: "pointer",
-                            fontWeight: "600",
                           }}
                           onClick={() => handleBookingClick(index)}
                         >
@@ -249,37 +164,38 @@ function Hospitals() {
                         </button>
                       </Box>
                     </Box>
+                    <Box>
                     {booking[index] && (
-                      <PaginationTimeSlot
-                        onSelect={(day, time) => handleSelection(day, time, hospital)}
-                      />
+                      <PaginationTimeSlot onSelect={(day, time) => handleSelection(day, time, hospital, index)} />
                     )}
+                    </Box>
+                    
                   </Box>
                 ))}
               </Box>
             )}
           </Box>
           <Box
-            sx={{
-              width: "363px",
-              height: "268px",
-              boxShadow: "0px 4px 4px 0px #00000040",
-              overflow: "hidden",
-              position: "relative",
-              borderRadius: "10px",
-            }}
-          >
-            <Box
-              component="img"
-              src={Add}
-              alt="Add"
               sx={{
-                width: "238%",
-                height: "100%",
-                objectFit: "cover",
+                width: "363px",
+                height: "268px",
+                boxShadow: "0px 4px 4px 0px #00000040",
+                borderRadius: "10px",
+                overflow: "hidden", // Ensures the image doesn't overflow
               }}
-            />
-          </Box>
+            >
+              <Box
+                component="img"
+                src={Add}
+                alt="Add"
+                sx={{
+                  width: "238%", // Match parent width
+                  height: "100%", // Match parent height
+                  objectFit: "cover", // Ensure the image scales and crops proportionally
+                }}
+              />
+            </Box>
+
         </Box>
       </Box>
       <FAQs />
